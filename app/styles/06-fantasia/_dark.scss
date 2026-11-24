@@ -1,0 +1,88 @@
+/* =====================================================================
+   Fantasia Code — "Midnight IDE" dark mode
+   Visitor toggle → html.fc-dark; applies where body.fc-dark-capable (home / product / listings).
+   Cart, checkout & customer pages stay light for readability.
+   Salla modals & popups are forced back to light so they stay readable.
+   ===================================================================== */
+html.fc-dark body.fc-dark-capable {
+  color-scheme: dark;
+  /* Night palette — neutral graphite (no blue/purple cast) */
+  --fc-bg: #0e1014;
+  --fc-surface: #16181d;
+  --fc-surface-2: #1c1f25;
+  --fc-ink: #23262e;
+  --fc-text: #ebedf0;
+  --fc-muted: #9ba1ac;
+  --fc-line: rgba(255, 255, 255, .07);
+  --fc-line-strong: rgba(255, 255, 255, .12);
+  --fc-tint: color-mix(in srgb, var(--color-primary) 14%, #16181d);
+  --fc-accent-soft: color-mix(in srgb, var(--fc-accent) 60%, #ffffff);
+  --fc-shadow: 0 1px 0 rgba(255, 255, 255, .03) inset;
+  --fc-shadow-lg: 0 24px 50px -28px rgba(0, 0, 0, .85);
+  background-color: var(--fc-bg);
+  color: var(--fc-text);
+
+  &.fc-surface-grid .app-inner { background-image:
+      linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px); }
+  &.fc-surface-dots .app-inner { background-image: radial-gradient(rgba(255, 255, 255, .08) 1px, transparent 1.4px); }
+
+  /* page frame (React theme) */
+  .app-inner { background-color: var(--fc-bg); }
+  .site-header__bar-outer, .site-header__bar, .site-header { background-color: var(--fc-surface); color: var(--fc-text); border-color: var(--fc-line); }
+  .site-header__brand, .site-header .header-action, .site-header__mainmenu a { color: var(--fc-text); }
+  .tq-topbar { background: #08090c !important; }
+  .mobile-bottom-bar, .mobile-page-title { background-color: var(--fc-surface); color: var(--fc-text); border-color: var(--fc-line); }
+  salla-cart-summary, salla-user-menu { color: var(--fc-text); }
+
+  /* generic tailwind utility surfaces used by templates & components */
+  :where(.bg-white, .bg-gray-50, .bg-gray-100):not(:where(.s-modal-wrapper, .swal2-popup) *) { background-color: var(--fc-surface) !important; }
+  :where(.text-gray-900, .text-gray-800, .text-gray-700, .text-dark):not(:where(.s-modal-wrapper, .swal2-popup) *) { color: var(--fc-text) !important; }
+  :where(.text-gray-600, .text-gray-500, .text-gray-400):not(:where(.s-modal-wrapper, .swal2-popup) *) { color: var(--fc-muted) !important; }
+  :where(.border-gray-100, .border-gray-200, .border-gray-300, .border-border-color):not(:where(.s-modal-wrapper, .swal2-popup) *) { border-color: var(--fc-line) !important; }
+
+  /* form controls */
+  :where(input, select, textarea, .form-input, .s-form-control):not(:where(.s-modal-wrapper, .swal2-popup) *):not([type="radio"]):not([type="checkbox"]) {
+    background-color: var(--fc-bg); color: var(--fc-text); border-color: var(--fc-line-strong);
+  }
+  ::placeholder { color: #64748b; }
+
+  /* Salla components shown on dark pages */
+  salla-breadcrumb, .s-breadcrumb-item, .s-breadcrumb-item a { color: var(--fc-muted); }
+  .s-breadcrumb-item:last-child { color: var(--fc-text); }
+  .s-button-outline:not(.s-button-primary) { border-color: var(--fc-line-strong); color: var(--fc-text); background: transparent; }
+  .s-button-light, .s-button-outline.s-button-light { color: var(--fc-text); border-color: var(--fc-line-strong); background: transparent; }
+  .s-quantity-input-container { border-color: var(--fc-line-strong); background: var(--fc-bg); }
+  .s-quantity-input-input, .s-quantity-input-button { color: var(--fc-text); background: transparent; }
+  .s-rating-stars-reviews, .s-social-share-btn { color: var(--fc-muted); }
+  .s-filters-widget-title, .s-filters-label, .s-filters-option-name { color: var(--fc-text); }
+  .s-products-slider-wrapper, .s-slider-block__title h2, .s-block__title h2 { color: var(--fc-text); }
+  .s-slider-block__title-nav button, .s-slider-nav-arrow { background: var(--fc-surface); color: var(--fc-text); border-color: var(--fc-line-strong); }
+  salla-comments, .s-comments-container, .s-comment-item { color: var(--fc-text); }
+  .s-comment-item, .s-comments-product-container, .s-comments-reviews-header { border-color: var(--fc-line) !important; }
+  .s-reviews-testimonial { background: var(--fc-surface); color: var(--fc-text); }
+  .s-infinite-scroll-btn { background: var(--fc-surface); color: var(--fc-text); border: 1px solid var(--fc-line-strong); }
+  .s-products-list-placeholder { color: var(--fc-muted); }
+  .s-product-options-option-label b { color: var(--fc-text); }
+  .s-installment, salla-installment > * { color: var(--fc-text); }
+
+  /* keep Salla popups light & readable */
+  .s-modal-wrapper, .swal2-popup, .s-search-container { color: #0f172a; }
+
+  /* product image backdrop */
+  .fc-gallery .details-slider, .s-product-card-image { background: var(--fc-surface-2); }
+  .fc-prose code { background: var(--fc-surface-2); }
+  .fc-prose pre { background: #0a0b0e; border: 1px solid var(--fc-line); }
+  .fc-chip--sale { background: rgba(239, 68, 68, .14); color: #fca5a5; }
+  .price_is_on_sale .fc-price, custom-salla-product-card.fc-card .s-product-card-sale-price h4 { color: #f87171; }
+  .fc-remaining { color: #fbbf24; }
+  .fc-hero--light { background: var(--fc-surface); }
+  .fc-btn--outline { background: transparent; }
+  .fc-cta--outline .fc-btn--light { background: #fff; color: #0a0e1a; }
+  .fc-chip--version { background: var(--fc-tint); color: var(--fc-accent-soft); border-color: transparent; }
+
+  /* store logo on dark */
+  &.fc-logo-plate .site-header__brand img { background: #fff; padding: 4px 10px; border-radius: 8px; }
+}
+
+/* footer always matches the Midnight look when dark mode is chosen */

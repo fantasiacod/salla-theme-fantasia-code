@@ -1,0 +1,57 @@
+/* =====================================================================
+   Fantasia Code — product card as an "app window"
+   Layered on the engine card (.s-product-card-*) and the theme's own sizing in
+   04-components/product.scss, so image-ratio settings and every card variant keep working.
+   The window bar is a pseudo-element: no extra DOM, nothing for the engine to fight.
+   `data-fc-path` / `data-fc-delivery` are set by app/components/product/ProductCard.tsx.
+   ===================================================================== */
+.s-product-card-entry.s-product-card-vertical,
+.s-product-card-entry.s-product-card-horizontal {
+  position: relative;
+  background: var(--fc-surface);
+  border: 1px solid var(--fc-line);
+  border-radius: var(--fc-radius);
+  box-shadow: var(--fc-shadow);
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--fc-shadow-lg);
+    border-color: color-mix(in srgb, var(--color-primary) 35%, var(--fc-line));
+  }
+
+  .s-product-card-price,
+  .s-product-card-sale-price h4,
+  .s-product-card-starting-price h4 { font-family: var(--fc-mono); font-weight: 800; letter-spacing: -.01em; }
+  .s-product-card-sale-price h4 { color: var(--fc-danger); }
+  .s-product-card-content-sub { border-top: 1px dashed var(--fc-line-strong); padding-top: .55rem; }
+  .s-product-card-content-title a:hover { color: var(--color-primary); }
+}
+
+/* window bar: three dots + a monospace "path" */
+.s-product-card-entry.s-product-card-vertical[data-fc-path] {
+  padding-top: 34px;
+  &::before {
+    content: attr(data-fc-path);
+    position: absolute; inset-inline: 0; top: 0; height: 34px; z-index: 2;
+    display: flex; align-items: center; padding-inline: 52px 12px;
+    font-family: var(--fc-mono); font-size: 11px; color: var(--fc-muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: ltr;
+    border-bottom: 1px solid var(--fc-line);
+    background:
+      radial-gradient(circle at 12px 17px, #ff5f57 4.5px, transparent 5px),
+      radial-gradient(circle at 26px 17px, #febc2e 4.5px, transparent 5px),
+      radial-gradient(circle at 40px 17px, #28c840 4.5px, transparent 5px),
+      linear-gradient(var(--fc-surface-2), var(--fc-surface));
+  }
+  [dir='rtl'] &::before { text-align: left; }
+}
+
+/* delivery badge (instant download / license key / dev service) */
+.fc-card-delivery {
+  display: inline-flex; align-items: center; gap: .3rem; order: -1; margin-bottom: .3rem;
+  font-size: .72rem; font-weight: 700; color: var(--fc-accent);
+  i { font-size: .85rem; }
+}
+.s-product-card-entry .s-product-card-content-main { display: flex; flex-direction: column; }
